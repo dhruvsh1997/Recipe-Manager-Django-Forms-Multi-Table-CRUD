@@ -1,0 +1,44 @@
+<!-- kitchen/templates/kitchen/recipe_list.html -->
+<!DOCTYPE html><html><head><title>Recipes</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#fef3c7,#fed7aa);min-height:100vh;padding:30px;color:#1f2937;}
+.container{max-width:1100px;margin:0 auto;}
+h1{font-size:2.4rem;color:#9a3412;margin-bottom:20px;}
+.toolbar{display:flex;gap:12px;margin-bottom:20px;}
+.inp{padding:12px 16px;border-radius:10px;border:2px solid #fcd34d;background:white;font-size:15px;flex:1;}
+.btn{padding:12px 18px;border-radius:10px;border:0;font-weight:600;cursor:pointer;text-decoration:none;color:white;}
+.btn-orange{background:linear-gradient(135deg,#f97316,#dc2626);}
+.btn-ghost{background:#fbbf24;color:#78350f;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+.card{background:white;border-radius:14px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,.08);transition:transform .15s;}
+.card:hover{transform:translateY(-3px);}
+.card h3{color:#9a3412;margin-bottom:8px;}
+.meta{color:#78716c;font-size:13px;margin-bottom:10px;}
+.ings{font-size:13px;color:#525252;margin-bottom:14px;}
+.actions a{font-size:13px;margin-right:8px;text-decoration:none;color:#dc2626;font-weight:600;}
+</style></head><body>
+<div class="container">
+<h1>🍳 Recipe Manager</h1>
+<form method="get" class="toolbar">
+  {{ search.q }}
+  <button class="btn btn-orange" type="submit">Search</button>
+  <a class="btn btn-orange" href="{% url 'kitchen:recipe_add' %}">+ New Recipe</a>
+  <a class="btn btn-ghost" href="{% url 'kitchen:trash_list' %}">🗑 Trash</a>
+</form>
+<div class="grid">
+  {% for r in recipes %}
+  <div class="card">
+    <h3>{{ r.name }}</h3>
+    <div class="meta">{{ r.cuisine }} · {{ r.prep_minutes }} min</div>
+    <div class="ings"><b>Ingredients:</b>
+      {% for i in r.ingredients.all %}{{ i.quantity }} {{ i.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+    </div>
+    <div class="actions">
+      <a href="{% url 'kitchen:recipe_edit' r.pk %}">Edit</a>
+      <a href="{% url 'kitchen:recipe_delete' r.pk %}">Delete</a>
+    </div>
+  </div>
+  {% empty %}<p>No recipes yet.</p>{% endfor %}
+</div>
+</div></body></html>

@@ -1,0 +1,43 @@
+<!-- kitchen/templates/kitchen/recipe_form.html -->
+<!DOCTYPE html><html><head><title>{{ action }} Recipe</title>
+<style>
+body{font-family:system-ui;background:linear-gradient(135deg,#fef3c7,#fed7aa);min-height:100vh;padding:30px;color:#1f2937;}
+.card{max-width:700px;margin:0 auto;background:white;padding:28px;border-radius:16px;box-shadow:0 6px 16px rgba(0,0,0,.08);}
+h1{color:#9a3412;margin-bottom:20px;} h3{color:#9a3412;margin:20px 0 10px;}
+label{display:block;font-size:13px;color:#78350f;margin-bottom:5px;font-weight:600;}
+.inp,input[type=text],input[type=number],textarea{width:100%;padding:11px;border-radius:8px;border:2px solid #fcd34d;margin-bottom:14px;font-size:15px;}
+.errorlist{color:#dc2626;font-size:13px;list-style:none;margin-top:-10px;margin-bottom:10px;}
+.ing-row{display:grid;grid-template-columns:2fr 1fr auto;gap:10px;align-items:start;margin-bottom:6px;}
+.btn{padding:11px 18px;border-radius:8px;border:0;font-weight:600;cursor:pointer;color:white;background:linear-gradient(135deg,#f97316,#dc2626);}
+a{color:#78350f;margin-left:12px;}
+</style></head><body>
+<div class="card">
+<h1>{{ action }} Recipe</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <label>Name</label>{{ form.name }}{{ form.name.errors }}
+  <label>Cuisine</label>{{ form.cuisine }}{{ form.cuisine.errors }}
+  <label>Prep minutes</label>{{ form.prep_minutes }}{{ form.prep_minutes.errors }}
+  <label>Instructions</label>{{ form.instructions }}{{ form.instructions.errors }}
+
+  <h3>Ingredients</h3>
+  {{ formset.management_form }}
+  {% for f in formset %}
+    <div class="ing-row">
+      {{ f.id }}{{ f.name }}{{ f.quantity }}
+      {% if f.instance.pk %}<label style="margin-top:10px;"><input type="checkbox" name="{{ f.DELETE.html_name }}"> remove</label>{% else %}<span></span>{% endif %}
+    </div>
+    {{ f.errors }}
+  {% endfor %}
+
+  <button class="btn" type="submit">{{ action }}</button>
+  <a href="{% url 'kitchen:recipe_list' %}">Cancel</a>
+</form>
+</div>
+<script>
+  // Optional: quick visual touch — focus first invalid input
+  const err = document.querySelector('.errorlist');
+  if (err) err.previousElementSibling?.focus?.();
+</script>
+</body></html>

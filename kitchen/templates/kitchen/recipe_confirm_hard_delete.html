@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Permanently Delete</title>
+<style>
+  body { font-family: system-ui; background: linear-gradient(135deg, #fef3c7, #fed7aa); min-height: 100vh; padding: 40px; color: #1f2937; }
+  .card { max-width: 500px; margin: 0 auto; background: white; padding: 28px; border-radius: 16px; border: 2px solid #dc2626; box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+  h2 { color: #dc2626; margin-bottom: 12px; }
+  p { color: #78716c; margin-bottom: 20px; }
+  .btn { padding: 11px 18px; border-radius: 8px; border: 0; font-weight: 600; cursor: pointer; color: white; }
+  .btn-danger { background: #dc2626; }
+  a { color: #78350f; margin-left: 12px; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>Permanently delete "{{ recipe.name }}"?</h2>
+  <p>This action cannot be undone. The recipe and all its ingredients will be removed from the database.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Yes, delete forever</button>
+    <a href="{% url 'kitchen:trash_list' %}">Cancel</a>
+  </form>
+</div>
+</body>
+</html>
