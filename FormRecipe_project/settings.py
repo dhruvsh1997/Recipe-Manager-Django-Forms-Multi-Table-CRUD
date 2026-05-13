@@ -120,18 +120,31 @@ STATIC_URL = 'static/'
 
 
 
-# Append to a log file so you can debug
+# ---------------- django-crontab configuration ----------------
+
+# Each tuple: (cron schedule string, dotted path to callable, [optional args], [optional kwargs], [optional suffix])
+# The 5th element is appended to the shell command — handy for redirecting output to a log file.
 CRONJOBS = [
-    ('0 3 * * *', 'kitchen.cron.run_cleanup', '>> /tmp/recipe_cleanup.log 2>&1'),
+    (
+        '0 3 * * *',                          # every day at 03:00
+        'kitchen.cron.run_cleanup',           # Python function to call
+        '>> /tmp/recipe_cleanup.log 2>&1',    # log redirection (Linux/macOS)
+    ),
 ]
 
-# Prevent overlapping runs of the same job (uses a lock file)
-CRONTAB_LOCK_JOBS = True
+# On Windows / WSL you may want a Windows-friendly path, e.g.:
+# '>> C:\\temp\\recipe_cleanup.log 2>&1'
 
-# Prefix every command (e.g. to source env vars)
-# CRONTAB_COMMAND_PREFIX = 'set -a && . /path/to/.env && set +a &&'
+# Optional: prefix every cron command (e.g. to source env vars).
+# CRONTAB_COMMAND_PREFIX = 'source /path/to/.env &&'
 
-# Override which Python to use; defaults to sys.executable (your venv's Python)
-# CRONTAB_PYTHON_EXECUTABLE = '/path/to/venv/bin/python'
-#CRONTAB_LOCK_JOBS = True is important if there’s any chance the job could take longer than its interval — without it, 
-# two copies might run concurrently and step on each other.
+# Optional: suffix (alternative to the per-job suffix above).
+# CRONTAB_COMMAND_SUFFIX = '2>&1'
+
+# Optional: which Python executable cron should use.
+# By default django-crontab uses sys.executable (your venv's Python), which is usually right.
+# CRONTAB_PYTHON_EXECUTABLE = '/absolute/path/to/venv/bin/python'
+
+# Optional: lock file to prevent overlapping runs of the same job.
+# CRONTAB_LOCK_JOBS = True
+
