@@ -14,4 +14,4 @@ class Command(BaseCommand):
         count = expired.count()
         for b in expired:
             b.delete(hard=True)
-        self.stdout.write(self.style.SUCCESS(f'Hard-deleted {count} books'))
+        self.stdout.write(self.style.SUCCESS(f'Hard-deleted {count} Recipy'))

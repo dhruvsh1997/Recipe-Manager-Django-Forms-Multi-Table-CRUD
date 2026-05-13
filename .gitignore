@@ -1,1 +1,5 @@
 .env
+
+
+kitchen/management/__pycache__/
+kitchen/management/commands/__pycache__/
