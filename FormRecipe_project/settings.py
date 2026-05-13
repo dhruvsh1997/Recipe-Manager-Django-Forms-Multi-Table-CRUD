@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'kitchen',
 ]
 
@@ -116,3 +117,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+
+# Append to a log file so you can debug
+CRONJOBS = [
+    ('0 3 * * *', 'kitchen.cron.run_cleanup', '>> /tmp/recipe_cleanup.log 2>&1'),
+]
+
+# Prevent overlapping runs of the same job (uses a lock file)
+CRONTAB_LOCK_JOBS = True
+
+# Prefix every command (e.g. to source env vars)
+# CRONTAB_COMMAND_PREFIX = 'set -a && . /path/to/.env && set +a &&'
+
+# Override which Python to use; defaults to sys.executable (your venv's Python)
+# CRONTAB_PYTHON_EXECUTABLE = '/path/to/venv/bin/python'
+#CRONTAB_LOCK_JOBS = True is important if there’s any chance the job could take longer than its interval — without it, 
+# two copies might run concurrently and step on each other.
