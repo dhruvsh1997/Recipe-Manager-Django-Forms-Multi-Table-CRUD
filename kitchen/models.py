@@ -45,16 +45,7 @@ class SoftDeleteModel(models.Model):
             return False
         return timezone.now() < self.deleted_at + timedelta(days=1)
 
-
-# class Book(SoftDeleteModel):
-#     title = models.CharField(max_length=200)
-#     author = models.CharField(max_length=100)
-#     isbn = models.CharField(max_length=20)
-#     published_year = models.IntegerField()
-
-#     def __str__(self):
-#         return self.title
-    
+   
 # Create your models here.
 class Recipe(SoftDeleteModel):
     name = models.CharField(max_length=150)
