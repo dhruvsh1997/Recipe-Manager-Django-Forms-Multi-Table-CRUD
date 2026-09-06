@@ -2,7 +2,7 @@
 
 A Django web app for managing recipes and their ingredients, built around **Django Forms**, **ModelForms**, and **inline formsets** for editing related records on one page. Demonstrates clean form-driven CRUD across two related tables (`Recipe` ↔ `Ingredient`), plus a soft-delete + 24-hour recovery window.
 
-Scheduling for the hard-delete cleanup uses **[django-crontab](https://pypi.org/project/django-crontab/)** so cron entries live inside `settings.py` and are managed via Django commands instead of editing the OS crontab directly.
+Scheduling for the hard-delete cleanups uses **[django-crontab](https://pypi.org/project/django-crontab/)** so cron entries live inside `settings.py` and are managed via Django commands instead of editing the OS crontab directly.
 
 ---
 
