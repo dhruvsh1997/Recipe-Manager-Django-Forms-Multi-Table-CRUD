@@ -9,7 +9,7 @@ Scheduling for the hard-delete cleanups uses **[django-crontab](https://pypi.org
 ## ✨ Features
 
 - Add, list, search, edit, and delete recipes (multi-table)
-- Edit a recipe and its ingredients on one page (inline formsets)
+- Edit a recipe and its ingredients on one pages (inline formsets)
 - Field-level + cross-field validation via Django Forms
 - Soft delete with 24-hour grace period (Trash bin)
 - Restore + permanent (hard) delete
